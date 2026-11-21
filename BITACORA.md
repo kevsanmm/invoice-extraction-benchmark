@@ -130,6 +130,14 @@ Cada entrada registra qué se hizo, con qué datos, el comando exacto, el result
 - **Carga:** 5180 anotaciones de `train.json` → `/Volumes/workspace/invoice_extraction_benchmark/eval_inputs/annotations_train/`, más `eval_inputs/train.json`.
 - **Verificación:** entrenamiento PIF / UCSF = 2760 / 2420.
 - **Hallazgo:** los 20 documentos de `dev/` (ajuste de M2 v2) son 13 PIF y 7 UCSF.
+- **Decisión:** la tesis es sectorial, así que el ajuste se rehace solo con documentos PIF. Las corridas E5 a E7 quedan como **piloto exploratorio**.
+
+## E10 · Selección de `dev_pif` (2026-11-21)
+
+- **Comando:** `python tools/select_dev_pif.py <dataset> dev_pif.json` (muestreo aleatorio simple, semilla 42, sobre los 2760 PIF de entrenamiento).
+- **Resultado:** 20 documentos (12 facturas, 7 órdenes y 1 recibo), ninguno repetido con `dev/`.
+- **Ubicación:** PDF en `/Volumes/workspace/invoice_extraction_benchmark/docile_pdfs/dev_pif/` y lista en `eval_inputs/dev_pif.json`.
+- **Regla:** el esquema de M2 v2 solo cambia si lo justifica `dev_pif`, no por lo observado en el piloto exploratorio.
 
 ---
 
