@@ -141,3 +141,17 @@ for nm, R in (("M1", R1), ("M2", R2)):
 spark.createDataFrame(desc, "modelo string, grupo string, indicador string, valor double") \
     .write.mode("overwrite").saveAsTable(f"{S}.ieb_pif_descriptivos")
 display(spark.table(f"{S}.ieb_pif_cabecera"))
+
+# COMMAND ----------
+
+# Alerta por anomalías matemáticas (solo descriptivo, sin prueba de hipótesis):
+# línea con |cantidad × costo − importe| > 1 o |Σ importes − total| > 1 (tools/eval_valores.py)
+al = []
+for nm, R in (("M1", R1), ("M2", R2)):
+    err = [d for d in PIF if R[d]["error"]]
+    al.append({"modelo": nm, "documentos": len(PIF), "con_error": len(err),
+               "con_error_alertados": sum(R[d]["alerta"] for d in err),
+               "sin_error_alertados": sum(R[d]["alerta"] and not R[d]["error"] for d in PIF),
+               "alertados": sum(R[d]["alerta"] for d in PIF)})
+spark.createDataFrame(al).write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{S}.ieb_pif_alertas")
+display(spark.table(f"{S}.ieb_pif_alertas"))

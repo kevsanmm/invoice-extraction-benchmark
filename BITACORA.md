@@ -145,7 +145,8 @@ Cada entrada registra qué se hizo, con qué datos, el comando exacto, el result
 - **Cabecera:** número 15/19 · fecha 17/19 · vencimiento 1/2 · emisor 10/19 · moneda 11/13 · total 18/18.
 - **Líneas:** 292 anotadas, 291 extraídas y 221 emparejadas (cobertura 75.7 %). Cantidad 87/97 · costo 166/166 · importe 123/124 · completa 211/221.
 - **Sin salida:** 0 de 20.
-- **Decisión:** pendiente (congelar sin cambios o ajustar la descripción del emisor).
+- **Decisión (2026-11-21):** M2 v2 se **congela sin cambios**. El emisor (10/19) no se ajusta, para no sobreajustar a 20 documentos; se trata como limitación y se cubre con revisión humana por campo.
+- **Alerta por anomalías matemáticas:** se reporta solo como dato descriptivo (`ieb_pif_alertas`, cuaderno 06) y como recomendación del Cap. V. No es hipótesis: el director retiró la validación matemática de los objetivos (informe del 14-nov).
 
 ---
 
