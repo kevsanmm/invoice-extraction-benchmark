@@ -125,6 +125,12 @@ Cada entrada registra qué se hizo, con qué datos, el comando exacto, el result
 - **Salida:** `ieb_pif_ficha`. 275 documentos, 385 páginas, 106 diseños, 3035 campos clave (30 tipos), 8189 campos de líneas (16 tipos), 1758 ítems, 146 emisores (99 con un documento, 30 sin emisor), grupos 69 / 69 / 137.
 - **Parte B** (evaluación de la tesis: 275 PIF, montos |Δ| < 0.01, Holm) preparada y **sin ejecutar** hasta tener las 3 constancias de expertos.
 
+## E9 · Anotaciones de entrenamiento en Free Edition (2026-11-21)
+
+- **Carga:** 5180 anotaciones de `train.json` → `/Volumes/workspace/invoice_extraction_benchmark/eval_inputs/annotations_train/`, más `eval_inputs/train.json`.
+- **Verificación:** entrenamiento PIF / UCSF = 2760 / 2420.
+- **Hallazgo:** los 20 documentos de `dev/` (ajuste de M2 v2) son 13 PIF y 7 UCSF.
+
 ---
 
 ## Cómo verificar a mano
