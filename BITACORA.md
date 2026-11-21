@@ -139,6 +139,14 @@ Cada entrada registra qué se hizo, con qué datos, el comando exacto, el result
 - **Ubicación:** PDF en `/Volumes/workspace/invoice_extraction_benchmark/docile_pdfs/dev_pif/` y lista en `eval_inputs/dev_pif.json`.
 - **Regla:** el esquema de M2 v2 solo cambia si lo justifica `dev_pif`, no por lo observado en el piloto exploratorio.
 
+## E11 · M2 v2 sin cambios sobre `dev_pif` (2026-11-21)
+
+- **Notebook:** `Notebook/07_ajuste_m2_dev_pif` (job de 508 s). Evaluación con la regla de la tesis: montos con |Δ| < 0.01.
+- **Cabecera:** número 15/19 · fecha 17/19 · vencimiento 1/2 · emisor 10/19 · moneda 11/13 · total 18/18.
+- **Líneas:** 292 anotadas, 291 extraídas y 221 emparejadas (cobertura 75.7 %). Cantidad 87/97 · costo 166/166 · importe 123/124 · completa 211/221.
+- **Sin salida:** 0 de 20.
+- **Decisión:** pendiente (congelar sin cambios o ajustar la descripción del emisor).
+
 ---
 
 ## Cómo verificar a mano
