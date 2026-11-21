@@ -17,10 +17,11 @@ Repositorio de trazabilidad de la tesis *Evaluación comparativa de modelos de l
 
 | Carpeta | Contenido |
 |---|---|
-| `notebooks/` | Cuadernos de Databricks: selección, extracción M2, adaptación M1, evaluación |
-| `src/` | Funciones de normalización, emparejamiento de líneas y pruebas estadísticas |
-| `results/` | Métricas agregadas y ficha de registro sin texto de los documentos |
-| `bitacora.md` | Registro de ejecuciones: fecha, versión del modelo y cambios |
+| `Notebook/` | Cuadernos de Databricks en orden (01 a 06). `06_pif_ficha_y_evaluacion` es la evaluación de la tesis (275 PIF) |
+| `tools/` | Normalización, evaluación por valor y emparejamiento de líneas (`eval_valores.py`), pruebas (`comparar.py`) |
+| `BITACORA.md` | Registro de cada ejecución: datos, comando, resultado y decisión |
+
+Las tablas de resultados viven en `workspace.invoice_extraction_benchmark` (Databricks Free Edition): `ieb_pif_*` para la tesis e `ieb_eval_*` para la evaluación exploratoria de 500 documentos.
 
 ## Datos
 
