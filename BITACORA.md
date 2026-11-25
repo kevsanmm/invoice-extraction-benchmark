@@ -148,6 +148,30 @@ Cada entrada registra qué se hizo, con qué datos, el comando exacto, el result
 - **Decisión (2026-11-21):** M2 v2 se **congela sin cambios**. El emisor (10/19) no se ajusta, para no sobreajustar a 20 documentos; se trata como limitación y se cubre con revisión humana por campo.
 - **Alerta por anomalías matemáticas:** se reporta solo como dato descriptivo (`ieb_pif_alertas`, cuaderno 06) y como recomendación del Cap. V. No es hipótesis: el director retiró la validación matemática de los objetivos (informe del 14-nov).
 
+## E12 · Validez de la medición sin instrumento propio (2026-11-24)
+
+- **Decisión:** la técnica es análisis de datos secundarios de fuente abierta. La validez se sustenta con evidencias medidas: referencia anotada de DocILE, reproducción de las métricas oficiales de M1 (E6), control oráculo (E3) y regla por valor de VRDU (Z. Wang et al., 2023).
+- **VRDU (verificado en el paper y en `match_utils.py` de google-research):** montos |Δ| ≤ 0,01; fechas como fecha; textos solo letras y dígitos; una línea es correcta solo si todos sus campos coinciden.
+- **Ajustes de la tesis, iguales para M1 y M2:** montos |Δ| < 0,01 (más estricto); textos sin mayúsculas; emparejamiento húngaro en vez de primera coincidencia.
+- **Código:** `tools/comparar.py` usa un generador propio `random.Random(42)` (no lo alteran otros hilos de Databricks). El cuaderno 06 se adaptó a esa firma.
+
+## E13 · Evaluación de la tesis sobre los 275 PIF (2026-11-24)
+
+- **Notebook:** `Notebook/08_resultados_tesis` (mismas funciones que el 06, más estadísticos, IC por campo y por indicador de línea, y extracto para el Anexo 7). Job serverless, run `952503035052701`.
+- **Salida:** `/Volumes/workspace/invoice_extraction_benchmark/eval_inputs/resultados_tesis.json`.
+- **Regla:** cantidad exacta y todos los montos con |Δ| < 0,01. IC 95 % por bootstrap de documentos (10 000, semilla 42). Holm en dos familias: hipótesis y campos de cabecera.
+
+| Hipótesis | n | M1 | M2 | Dif. [IC 95 %] | Prueba | p Holm |
+|---|---|---|---|---|---|---|
+| HG | 275 | 0.598 | 0.755 | 0.157 [0.118, 0.197] | Wilcoxon | 1.07e-11 |
+| HE1 | 275 | 0.653 | 0.764 | 0.111 [0.074, 0.149] | Wilcoxon | 1.85e-08 |
+| HE2 | 253 | 0.542 | 0.719 | 0.177 [0.109, 0.242] | Wilcoxon | 6.21e-07 |
+| HE3 | 69 | 0.412 | 0.809 | 0.397 [0.327, 0.468] | Wilcoxon | 3.37e-10 |
+
+- **Cabecera:** M2 > M1 en moneda (M1 no predice el campo en 475 de 500 documentos de `val`); M1 > M2 en emisor y vencimiento; número, fecha de emisión y total sin diferencia (Holm).
+- **Líneas:** M1 1845 extraídas / 1437 emparejadas; M2 1565 / 1397; anotadas 1758. Sin salida: 0 en ambos.
+- **Alerta (solo descriptiva):** M1 146 de 255 documentos con error; M2 110 de 214.
+
 ---
 
 ## Cómo verificar a mano

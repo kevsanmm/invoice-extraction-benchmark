@@ -5,7 +5,7 @@
 # MAGIC | Parte | Qué hace | Cuándo se ejecuta |
 # MAGIC |---|---|---|
 # MAGIC | A · Ficha | Mide la muestra PIF desde las anotaciones (sin modelos) → `ieb_pif_ficha` | Siempre |
-# MAGIC | B · Evaluación | M1 vs M2 v2 sobre los 275 PIF, montos con tolerancia 0,01, Holm → `ieb_pif_*` | Solo con `ejecutar_evaluacion = si`, **después** de las 3 constancias de expertos |
+# MAGIC | B · Evaluación | M1 vs M2 v2 sobre los 275 PIF, montos con tolerancia 0,01, Holm → `ieb_pif_*` | Solo con `ejecutar_evaluacion = si`, después de verificar la validez de la medición (BITACORA E3, E6 y E12) |
 # MAGIC
 # MAGIC No modifica `tools/` ni las tablas `ieb_eval_*` (evaluación exploratoria de 500 con tolerancia 0,50).
 
@@ -14,7 +14,7 @@
 dbutils.widgets.dropdown("ejecutar_evaluacion", "no", ["no", "si"])
 EJECUTAR_B = dbutils.widgets.get("ejecutar_evaluacion") == "si"
 
-import json, os, re, sys, collections
+import json, os, re, sys, collections, random
 V = "/Volumes/workspace/invoice_extraction_benchmark/eval_inputs"
 S = "workspace.invoice_extraction_benchmark"
 ANN = f"{V}/annotations_val"
@@ -53,7 +53,7 @@ display(df)
 
 # COMMAND ----------
 
-# Parte B · evaluación de la tesis (apagada hasta tener las 3 constancias de expertos)
+# Parte B · evaluación de la tesis (resultados completos en el cuaderno 08)
 if not EJECUTAR_B:
     dbutils.notebook.exit("Parte A lista. Parte B no ejecutada (ejecutar_evaluacion = no).")
 
@@ -95,7 +95,7 @@ def doc_head(r):
 
 def prueba(f, ds):
     a = [f(R1[d]) for d in ds]; b = [f(R2[d]) for d in ds]
-    out = paired(a, b)
+    out = paired(a, b, random.Random(42))
     dif = [y - x for x, y in zip(a, b)]
     out["shapiro_W"] = shapiro(dif).statistic if len(set(dif)) > 2 else None
     return out
